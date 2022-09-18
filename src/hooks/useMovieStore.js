@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { onGetMovies } from '../store';
+import { onGetMovies, onGetMovieTrailer, onGetImdbApiUsage } from '../store';
 import { imdbApi } from '../api';
 import { getEnvVariables } from '../helpers';
 
@@ -23,8 +23,19 @@ export const useMovieStore = () => {
         try {
 
             const { data } = await imdbApi.get(`/YouTubeTrailer/${VITE_IMDB_API_KEY}/${id}`);
-            return( data.videoUrl );
-            // TODO: Validar que no retorne una promesa
+            startGettingImdbApiUsage();
+            dispatch( onGetMovieTrailer( data ) );
+
+        } catch (error) {
+            console.error('Ups! Algo salió mal: \n', error);
+        }
+    };
+
+    const startGettingImdbApiUsage = async () => {
+        try {
+
+            const { data } = await imdbApi.get(`/Usage/${VITE_IMDB_API_KEY}`);
+            dispatch( onGetImdbApiUsage( data ) );
 
         } catch (error) {
             console.error('Ups! Algo salió mal: \n', error);
@@ -37,7 +48,8 @@ export const useMovieStore = () => {
 
         //* Métodos
         startGetMovies,
-        startGettingTrailerURL
+        startGettingTrailerURL,
+        startGettingImdbApiUsage
 
     };
 };

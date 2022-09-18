@@ -10,12 +10,12 @@ export const MovieCard = () => {
 
     const { startGettingTrailerURL } = useMovieStore();
 
-    const { activeMovie } = useSelector(state => state.movies);
+    const { activeMovie, activeMovieTrailer } = useSelector(state => state.movies);
 
     const handleClickShowTrailer = () => {
-        let trailerURL = startGettingTrailerURL(activeMovie?.id);
-        console.log(trailerURL);
-        window.open('https://www.youtube.com/watch?v=mqKAhsp-QqQ');
+        startGettingTrailerURL(activeMovie?.id);
+        console.log(activeMovieTrailer.videoUrl);
+        window.open( activeMovieTrailer?.videoUrl );
     };
 
     return (

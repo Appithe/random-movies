@@ -6,10 +6,13 @@ import { useMovieStore } from './hooks';
 function App() {
 
     // TODO: Implementar modo oscuro
-    const { startGetMovies } = useMovieStore();
+    const { startGetMovies, startGettingImdbApiUsage } = useMovieStore();
+    
+    // TODO: Implementar método para mostrar otra película
 
     useEffect(() => {
         startGetMovies();
+        startGettingImdbApiUsage();
     }, []);
 
     return (

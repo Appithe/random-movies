@@ -5,7 +5,9 @@ export const movieSlice = createSlice({
     initialState: {
         isLoadingMovies: true,
         moviesList: {},
-        activeMovie: null
+        activeMovie: {},
+        activeMovieTrailer: null,
+        imdbUsage: {},
     },
     reducers: {
         onGetMovies: (state, { payload }) => {
@@ -13,10 +15,17 @@ export const movieSlice = createSlice({
             state.moviesList = payload.items;
             state.activeMovie = payload.items[0];
         },
+        onGetMovieTrailer: (state, { payload }) => {
+            state.activeMovieTrailer = payload;
+        },
+        onGetImdbApiUsage: (state, { payload }) => {
+            state.imdbUsage = payload;
+        }
     }
 });
 
 export const {
     onGetMovies,
-    onShowRandomMovie
+    onGetMovieTrailer,
+    onGetImdbApiUsage
 } = movieSlice.actions;
