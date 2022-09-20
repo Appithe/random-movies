@@ -1,5 +1,10 @@
 import { useDispatch } from 'react-redux';
-import { onGetMovies, onGetMovieTrailer, onGetImdbApiUsage } from '../store';
+import {
+    onGetMovies,
+    onGetMovieTrailer,
+    onGetImdbApiUsage,
+    onGetNextMovie
+} from '../store';
 import { imdbApi } from '../api';
 import { getEnvVariables } from '../helpers';
 
@@ -12,7 +17,7 @@ export const useMovieStore = () => {
         try {
 
             const { data } = await imdbApi.get(`/InTheaters/${VITE_IMDB_API_KEY}`);
-            dispatch( onGetMovies(data) );
+            dispatch(onGetMovies(data));
 
         } catch (error) {
             console.error('Ups! Algo salió mal: \n', error);
@@ -24,7 +29,7 @@ export const useMovieStore = () => {
 
             const { data } = await imdbApi.get(`/YouTubeTrailer/${VITE_IMDB_API_KEY}/${id}`);
             startGettingImdbApiUsage();
-            dispatch( onGetMovieTrailer( data ) );
+            dispatch(onGetMovieTrailer(data));
 
         } catch (error) {
             console.error('Ups! Algo salió mal: \n', error);
@@ -35,11 +40,15 @@ export const useMovieStore = () => {
         try {
 
             const { data } = await imdbApi.get(`/Usage/${VITE_IMDB_API_KEY}`);
-            dispatch( onGetImdbApiUsage( data ) );
+            dispatch(onGetImdbApiUsage(data));
 
         } catch (error) {
             console.error('Ups! Algo salió mal: \n', error);
         }
+    };
+
+    const startGetNextMovie = () => {
+        dispatch(onGetNextMovie());
     };
 
     return {
@@ -49,7 +58,8 @@ export const useMovieStore = () => {
         //* Métodos
         startGetMovies,
         startGettingTrailerURL,
-        startGettingImdbApiUsage
+        startGettingImdbApiUsage,
+        startGetNextMovie,
 
     };
 };
