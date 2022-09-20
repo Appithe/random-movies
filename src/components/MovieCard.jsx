@@ -14,8 +14,7 @@ export const MovieCard = () => {
 
     const handleClickShowTrailer = () => {
         startGettingTrailerURL(activeMovie?.id);
-        console.log(activeMovieTrailer.videoUrl);
-        window.open( activeMovieTrailer?.videoUrl );
+        window.open(activeMovieTrailer?.videoUrl);
     };
 
     return (
