@@ -6,13 +6,14 @@ import { useMovieStore } from '../hooks';
 
 export const MovieCard = () => {
 
-    // TODO: Implementar guardado de películas en lista de favoritos
+    //* TODO: Implementar guardado de películas en lista de favoritos
 
     const { startGettingTrailerURL } = useMovieStore();
 
     const { activeMovie, activeMovieTrailer } = useSelector(state => state.movies);
 
     const handleClickShowTrailer = () => {
+        // FIXME: Si se hace click en el botón de mostrar trailer, y luego se hace click en el botón de mostrar otra película, el trailer no se muestra
         startGettingTrailerURL(activeMovie?.id);
         window.open(activeMovieTrailer?.videoUrl);
     };
