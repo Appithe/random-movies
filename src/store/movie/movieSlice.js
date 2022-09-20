@@ -20,6 +20,12 @@ export const movieSlice = createSlice({
         },
         onGetImdbApiUsage: (state, { payload }) => {
             state.imdbUsage = payload;
+        },
+        onGetNextMovie: (state) => {
+            const { moviesList, activeMovie } = state;
+            const activeMovieIndex = moviesList.findIndex(movie => movie.id === activeMovie.id);
+            const nextMovie = moviesList[activeMovieIndex + 1];
+            state.activeMovie = nextMovie;
         }
     }
 });
@@ -27,5 +33,6 @@ export const movieSlice = createSlice({
 export const {
     onGetMovies,
     onGetMovieTrailer,
-    onGetImdbApiUsage
+    onGetImdbApiUsage,
+    onGetNextMovie,
 } = movieSlice.actions;
