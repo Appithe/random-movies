@@ -8,15 +8,34 @@ export const movieSlice = createSlice({
         activeMovie: {},
         activeMovieTrailer: null,
         imdbUsage: {},
+        errorMessage: null
     },
     reducers: {
         onGetMovies: (state, { payload }) => {
-            state.isLoadingMovies = false;
-            state.moviesList = payload.items;
-            state.activeMovie = payload.items[0];
+            if (payload.errorMessage) {
+                state.errorMessage = payload.errorMessage;
+            } else {
+                state.isLoadingMovies = false;
+                state.moviesList = payload.items;
+                state.activeMovie = payload.items[0];
+            }
         },
         onGetMovieTrailer: (state, { payload }) => {
-            state.activeMovieTrailer = payload;
+
+            if (payload.errorMessage) {
+                state.errorMessage = payload.errorMessage;
+            } else {
+                if (state.activeMovie.id !== payload.imDbId) {
+                    state.activeMovieTrailer = null;
+                    return;
+                } else {
+                    state.activeMovieTrailer = {
+                        movieId: payload.imDbId,
+                        url: payload.videoUrl
+                    };
+                }
+            }
+
         },
         onGetImdbApiUsage: (state, { payload }) => {
             state.imdbUsage = payload;

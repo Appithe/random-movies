@@ -5,7 +5,7 @@ export const Navbar = () => {
 
     // const userStatus = 'not-auth'; // checking, auth, not-auth
     // TODO: Implementar autenticación de usuario
-    const { imdbUsage } = useSelector(state => state.movies);
+    const { errorMessage, imdbUsage } = useSelector(state => state.movies);
 
     return (
 
@@ -19,7 +19,7 @@ export const Navbar = () => {
                         <li>
                             <span href="#" className="block py-2 pr-4 pl-3 text-gray-700 rounded md:border-0  md:p-0 dark:text-gray-400">
                                 {
-                                    imdbUsage.errorMessage ? imdbUsage.errorMessage : `API Usage: ${imdbUsage?.count} / ${imdbUsage?.maximum}`
+                                    errorMessage ? errorMessage : `API Usage: ${imdbUsage?.count} / ${imdbUsage?.maximum}`
                                 }
                             </span>
                         </li>

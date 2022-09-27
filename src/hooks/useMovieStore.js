@@ -28,7 +28,6 @@ export const useMovieStore = () => {
         try {
 
             const { data } = await imdbApi.get(`/YouTubeTrailer/${VITE_IMDB_API_KEY}/${id}`);
-            startGettingImdbApiUsage();
             dispatch(onGetMovieTrailer(data));
 
         } catch (error) {

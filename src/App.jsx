@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { MovieCard, Navbar } from './components/';
+import { Main, Navbar, Error } from './components/';
 import 'animate.css';
 import { useMovieStore } from './hooks';
+import { useSelector } from 'react-redux';
 
 function App() {
 
@@ -9,10 +10,9 @@ function App() {
     const {
         startGetMovies,
         startGettingImdbApiUsage,
-        startGetNextMovie
     } = useMovieStore();
 
-    // TODO: Implementar método para mostrar otra película
+    const { errorMessage } = useSelector(state => state.movies);
 
     useEffect(() => {
         startGetMovies();
@@ -20,11 +20,15 @@ function App() {
     }, []);
 
     return (
-        <main className="h-screen bg-cyan-300">
+        <main className="h-screen bg-gradient-to-br from-[#9FFFF5] to-[#BDFFFD]">
+            {/* <main className="h-screen bg-gradient-to-br from-[#134074] to-[#0B2545]"> */}
             <Navbar />
             <div className="flex flex-col gap-8 justify-center">
-                <MovieCard />
-                <button onClick={ startGetNextMovie } className="bg-blue-500 hover:bg-blue-400 text-white rounded-md p-3 w-64 place-self-center">Mostrar otra película &#x1F3A5;</button>
+                {
+                    errorMessage
+                        ? <Error message={errorMessage} />
+                        : <Main />
+                }
             </div>
         </main>
     );
